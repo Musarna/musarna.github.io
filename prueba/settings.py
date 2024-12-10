@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+import dj_database_url
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -18,7 +19,7 @@ SECRET_KEY = 'django-insecure-5%#+ho&8(-kj&n8@f=g@ls=vfh!ops(b&^r&0_zey1dt5_z!5-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['pruebabackend123.herokuapp.com']
+ALLOWED_HOSTS = ['pruebabackend123-1f6059186a24.herokuapp.com']
 
 LOGIN_REDIRECT_URL = "inicio"
 LOGOUT_REDIRECT_URL = "/accounts/login/"
@@ -81,17 +82,7 @@ WSGI_APPLICATION = 'prueba.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'prueba',
-        'USER': 'user_prueba',
-        'PASSWORD': 'Ventana#123',
-        'HOST': 'localhost',
-        'PORT': '3306',
-        'OPTIONS': {
-            'init_command':'SET sql_mode="STRICT_ALL_TABLES"'
-        }
-    }
+    'default': dj_database_url.config(default=os.environ.get('JAWSDB_URL'))
 }
 
 
