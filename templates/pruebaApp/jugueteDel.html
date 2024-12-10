@@ -1,0 +1,24 @@
+{% extends "pruebaApp/base.html" %} 
+{% load static %}
+
+{% block contenido %}
+<div class="row">
+    <div class="col-8 offset-2">
+        <h2>Confirmar Eliminar Oferta</h2>
+        <div class="alert alert-danger">
+            Esta Seguro de ELIMINAR el Puesto {{ juguete.nombre }} de la Empresa {{ juguete.codigoProducto }}
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col">
+                    <a  class="btn btn-dark"  href="{% url 'juguetes' %}"> Cancelar </a>
+                </div>
+                <div class="col">
+                    <button class="btn btn-danger" type="submit">Confirmar Eliminar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock contenido %}

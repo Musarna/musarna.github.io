@@ -1,0 +1,64 @@
+{% extends "pruebaApp/base.html" %}
+{% load static %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <h2 class="mb-4">Agregar Empleo</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-12">
+                <img src="{% static 'images/juguete.png' %}" alt="" width="200" height="auto">
+                <label for="foto">Fotografia del Juguete</label>
+                <input type="file" name="foto" class="form-control" >
+            </div>
+            <!-- Campo Nombre -->
+            <div class="col-12 col-md-6 mb-3">
+                <label for="id_nombre" class="form-label">Puesto</label>
+                {{ form.nombre }}
+                <div class="text-danger">
+                    {{ form.nombre.errors }}
+                </div>
+            </div>
+
+            <!-- Campo Descripción -->
+            <div class="col-12 col-md-6 mb-3">
+                <label for="id_descripcion" class="form-label">{{ form.descripcion.label }}</label>
+                {{ form.descripcion }}
+                <div class="text-danger">
+                    {{ form.descripcion.errors }}
+                </div>
+            </div>
+
+            <!-- Campo Precio -->
+            <div class="col-12 col-md-6 mb-3">
+                <label for="id_precio" class="form-label">Sueldo: </label>
+                {{ form.precio }}
+                <div class="text-danger">
+                    {{ form.precio.errors }}
+                </div>
+            </div>
+
+            <!-- Campo Codigo Producto -->
+            <div class="col-12 col-md-6 mb-3">
+                <label for="id_codigoProducto" class="form-label">Empresa: </label>
+                {{ form.codigoProducto }}
+                <div class="text-danger">
+                    {{ form.codigoProducto.errors }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="row">
+            <div class="col">
+                <a class="btn btn-secondary" href="{% url 'inicio' %}">Volver a Inicio</a>
+            </div>
+            <div class="col text-end">
+                <button class="btn btn-success" type="submit">Guardar</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

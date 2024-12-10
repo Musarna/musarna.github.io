@@ -1,0 +1,128 @@
+{% extends "pruebaApp/base.html" %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Detalles de la Posicion</h2>
+
+    <!-- Card for product details -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h5 class="card-title">{{ juguete.nombre }}</h5>
+            <p class="card-text"><strong>Código:</strong> {{ juguete.codigoProducto }}</p>
+            <p class="card-text"><strong>Precio:</strong> ${{ juguete.precio }}</p>
+            <p class="card-text"><strong>Descripción:</strong> {{ juguete.descripcion }}</p>
+            
+            {% if juguete.foto %}
+                <div class="text-center mt-3">
+                    <img src="{{ juguete.foto.url }}" alt="foto del juguete" class="img-fluid rounded" style="max-width: 300px; height: auto;">
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Action buttons section -->
+    <div class="d-flex justify-content-around mt-4">
+        {% if request.user.is_staff %}
+        <a href="{% url 'editarJuguete' juguete.id %}" class="btn btn-warning d-flex align-items-center">
+            <i class="bi bi-pen me-2"></i> Modificar
+        </a>
+        {% endif %}
+
+        {% if request.user.is_staff %}
+        <a href="{% url 'jugueteDel' juguete.id %}" class="btn btn-danger d-flex align-items-center">
+            <i class="bi bi-trash3-fill me-2"></i> Eliminar
+        </a>
+        {% endif %}
+
+        <a href="{% url 'juguetes' %}" class="btn btn-secondary d-flex align-items-center">
+            <i class="bi bi-arrow-left me-2"></i> Volver
+        </a>
+        <button class="btn btn-primary d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#ventaModal">
+            <i class="bi bi-cart3 me-2"></i> Aplicar
+        </button>
+    </div>
+</div>
+
+<div class="modal fade" id="ventaModal" tabindex="-1" aria-labelledby="ventaModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ventaModalLabel">Aplicar a Empleo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="ventaForm">
+                    <div class="mb-3">
+                        <label for="cantidad" class="form-label">numero celularr</label>
+                        <input type="number" class="form-control" id="cantidad" placeholder="escriba todo sin espacios">
+                        <div class="text-danger d-none" id="cantidadError">La cantidad debe ser un número mayor a 0 y entero.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nombreComprador" class="form-label">Como desea que le refieran</label>
+                        <input type="text" class="form-control" id="nombreComprador" placeholder="Ingresa el nombre">
+                        <div class="text-danger d-none" id="nombreError">El nombre es obligatorio y debe tener al menos 3 caracteres.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="direccionComprador" class="form-label">Mensaje Adicional</label>
+                        <textarea class="form-control" id="direccionComprador" rows="3" placeholder="Ingresa la dirección"></textarea>
+                        <div class="text-danger d-none" id="direccionError">La dirección es obligatoria y debe tener al menos 5 caracteres.</div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="validarFormulario()">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function validarFormulario() {
+        // Obtener los campos del formulario
+        const cantidad = document.getElementById('cantidad');
+        const nombre = document.getElementById('nombreComprador');
+        const direccion = document.getElementById('direccionComprador');
+
+        // Obtener los mensajes de error
+        const cantidadError = document.getElementById('cantidadError');
+        const nombreError = document.getElementById('nombreError');
+        const direccionError = document.getElementById('direccionError');
+
+        let esValido = true;
+
+        // Validar cantidad
+        if (cantidad.value <= 0 || !Number.isInteger(parseFloat(cantidad.value))) {
+            cantidadError.classList.remove('d-none');
+            esValido = false;
+        } else {
+            cantidadError.classList.add('d-none');
+        }
+
+        // Validar nombre
+        if (nombre.value.trim().length < 3) {
+            nombreError.classList.remove('d-none');
+            esValido = false;
+        } else {
+            nombreError.classList.add('d-none');
+        }
+
+        /* Validar dirección
+        if (direccion.value.trim().length < 5) {
+            direccionError.classList.remove('d-none');
+            esValido = false;
+        } else {
+            direccionError.classList.add('d-none');
+        }
+        */
+
+        // Si todo es válido, cerrar el modal
+        if (esValido) {
+            alert('Formulario validado correctamente.');
+            const ventaModal = document.getElementById('ventaModal');
+            const modalInstance = bootstrap.Modal.getOrCreateInstance(ventaModal);
+            modalInstance.hide();
+        }
+    }
+</script>
+{% endblock %}

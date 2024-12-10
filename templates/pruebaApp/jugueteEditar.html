@@ -1,0 +1,81 @@
+{% extends "pruebaApp/base.html" %}
+{% load static %}
+
+{% block contenido %}
+    <div class="row">
+        <div class="col">
+            <h2 class="mb-4">Mantenedor de Empleos</h2>
+            <form method="post" action="{% url 'jugueteEditado' juguete.id %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <!-- Foto del juguete -->
+                <div class="row mb-4">
+                    <div class="col-12 text-center">
+                        <img src="{{ juguete.foto.url }}" alt="foto del juguete" class="img-fluid mb-3" style="max-width: 200px;">
+                        <label for="foto" class="form-label mt-3">Fotografía</label>
+                        <input type="file" name="foto" class="form-control">
+                    </div>
+                </div>
+                
+                <!-- Campos del formulario -->
+                <div class="row">
+                    <div class="col-md-6 mb-3 mt-3">
+                        <label for="id_nombre" class="form-label">Puesto:</label>
+                        {{ form.nombre }}
+                        {% if form.nombre.errors %}
+                            <div class="text-danger">
+                                {% for error in form.nombre.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        {{ form.descripcion.label_tag }}
+                        {{ form.descripcion }}
+                        {% if form.descripcion.errors %}
+                            <div class="text-danger">
+                                {% for error in form.descripcion.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="id_precio" class="form-label">Sueldo:</label>
+                        {{ form.precio }}
+                        {% if form.precio.errors %}
+                            <div class="text-danger">
+                                {% for error in form.precio.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="id_codigoProducto" class="form-label">Empresa:</label>
+                        {{ form.codigoProducto }}
+                        {% if form.codigoProducto.errors %}
+                            <div class="text-danger">
+                                {% for error in form.codigoProducto.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Botones de acción -->
+                <div class="row mt-4">
+                    <div class="col text-center">
+                        <a class="btn btn-secondary" href="{% url 'juguetes' %}">Volver a Inicio</a>
+                    </div>
+                    <div class="col text-center">
+                        <button class="btn btn-warning" type="submit">Modificar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock contenido %}
+

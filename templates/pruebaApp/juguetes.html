@@ -1,0 +1,60 @@
+{% extends "pruebaApp/base.html" %}
+{% load static %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <h1 class="mb-4">Listado de Empleos Disponibles</h1>
+
+    <!-- Botón Agregar Juguete     -->
+    {% if request.user.is_staff %}
+    <!-- Botón para agregar una nueva empresa -->
+        <div class="row mb-3">
+            <div class="col">
+                <a class="btn btn-success" href="{% url 'juguete' %}">
+                    <i class="bi bi-person-fill-add"></i> Agregar Empresa
+                </a>
+            </div>
+        </div>
+    {% endif %}
+
+
+    <!-- Formulario de búsqueda -->
+    <form method="get" action="{% url 'juguetes' %}" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="q" value="{{ query }}" class="form-control" placeholder="Buscar por Empleo">
+            <button class="btn btn-outline-primary" type="submit"><i class="bi bi-search"></i> Buscar</button>
+        </div>
+    </form>
+
+    <!-- Tabla de juguetes -->
+    <div class="row">
+        <div class="col">
+            <table class="table table-striped table-bordered table-hover mt-3">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Empresa</th>
+                        <th>Puesto</th>
+                        <th>Sueldo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for juguete in juguetes %}
+                        <tr>
+                            <td>{{ juguete.codigoProducto }}</td>
+                            <td>{{ juguete.nombre }}</td>
+                            <td>${{ juguete.precio }}</td> <!-- Agregado símbolo de dólar -->
+                            <td>
+                                <!-- Botón para ver los detalles -->
+                                <a href="{% url 'juguete_detalles' juguete.id %}" class="btn btn-info">
+                                    <i class="bi bi-eye"></i> Ver detalles
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

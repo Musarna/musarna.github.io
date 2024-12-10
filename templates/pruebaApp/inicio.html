@@ -1,0 +1,30 @@
+{% extends "pruebaApp/base.html" %}
+{% load static %}
+
+{% block contenido %}
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Seleccione una categoria</h2>
+        <div class="row justify-content-center">
+            <!-- Botón para Mantenedor de Juguetes -->
+            <div class="col-md-4 mb-3">
+                <a class="btn btn-lg btn-primary w-100" href="{% url 'juguetes' %}">
+                    Buscar empleo 
+                </a>
+            </div>
+            <!-- invisivle
+
+            <div class="col-md-4 mb-3">
+                <a class="btn btn-lg btn-success w-100" href="">
+                    Libros
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a class="btn btn-lg btn-warning w-100" href="">
+                    Ropa
+                </a>
+            </div>
+            -->
+            
+        </div>
+    </div>
+{% endblock contenido %}
